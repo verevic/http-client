@@ -35,13 +35,13 @@ private:
 			std::string strStatus(match[3].first, match[3].second);
 			httpStatus_ = std::stoi(strStatus);
 			if (httpStatus_ != 200) {
-				std::cout << content_ << std::endl;
+				std::cerr << content_ << std::endl;
 				char msg[100];
 				std::sprintf(msg, "Server replied with status %d(%s)", httpStatus_, std::string(match[4].first, match[4].second).c_str());
 				throw std::runtime_error(msg);
 			}
 		} else {
-			std::cout << "Unexpected status line:" << line << std::endl;
+			std::cerr << "Unexpected status line:" << line << std::endl;
 			throw std::runtime_error("Unexpected status line received from server");
 		}
 		contentPos_ = eoln + 1;
@@ -67,7 +67,7 @@ private:
 
 			size_t separator = content_.find_first_of(':', contentPos_);
 			if (separator == std::string::npos) {
-				std::cout << std::endl << "Invalid message header entry(" << content_.substr(contentPos_, eoln - contentPos_) << ")" << std::endl;
+				std::cerr << std::endl << "Invalid message header entry(" << content_.substr(contentPos_, eoln - contentPos_) << ")" << std::endl;
 				throw std::runtime_error("Invalid message header entry");
 			}
 

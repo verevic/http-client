@@ -7,6 +7,7 @@ namespace HTTP_CONST {
 	std::string Localhost("localhost");
 	std::string Get("GET");
 	std::string NoBody;
+	std::string Root("/");
 }
 
 class http_request_impl : public http_request {
@@ -29,7 +30,11 @@ public:
 	}
 	// const std::string& method() const;
 	const std::string& path() const {
-		return url_.path();
+		const std::string& path = url_.path();
+		if (!path.empty()) {
+			return path;
+		}
+		return HTTP_CONST::Root;
 	}
 	const std::string& query() const {
 		return url_.query();
